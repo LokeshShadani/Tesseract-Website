@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesseract - The Dimensional Utility Bot</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for custom colors and use Inter font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tesseract-dark': '#081329', // Darker blue-slate background
+                        'tesseract-accent': '#22d3ee', // Vibrant Cyan/Teal accent
+                        'tesseract-light': '#cbd5e1', // Light slate for body text
+                        'tesseract-bg-darker': '#050a18', // Even darker for footer
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Apply smooth scrolling and use the custom dark background */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #081329; /* tesseract-dark */
+            color: #cbd5e1; /* tesseract-light */
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for aesthetics in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22d3ee;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4;
+        }
+
+        /* SVG icon styles for the feature section */
+        .feature-icon {
+            color: #22d3ee; /* tesseract-accent */
+        }
+        
+        /* === COOL TEXTS: Neon Text Glow Effect (Stronger) === */
+        .text-glow {
+            text-shadow: 0 0 10px #22d3ee70, 0 0 20px #22d3ee50;
+        }
+
+        /* === BIT COOL THING: Geometric Grid Background Effect === */
+        .geometric-background {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem; /* rounded-3xl */
+            padding: 3rem;
+            margin-top: -1rem; /* Adjust margin slightly due to padding */
+        }
+        .geometric-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, #1e293b 1px, transparent 1px),
+                linear-gradient(to bottom, #1e293b 1px, transparent 1px);
+            background-size: 40px 40px; /* Tighter grid */
+            opacity: 0.15; /* Subtle visibility */
+            z-index: 0;
+            pointer-events: none;
+            /* Animation for subtle movement, the "cool thing" */
+            animation: moveGrid 60s linear infinite;
+        }
+        
+        /* New: Radial Gradient Overlay for Hero */
+        .radial-gradient-overlay::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Subtle radial gradient from center transparent to dark edges */
+            background: radial-gradient(circle at center, rgba(8, 19, 41, 0) 0%, rgba(8, 19, 41, 0.5) 70%, rgba(8, 19, 41, 1) 100%);
+            z-index: 5; /* Below content (z-index: 10) but above grid (z-index: 0) */
+            pointer-events: none;
+        }
+
+
+        /* Define the grid movement animation */
+        @keyframes moveGrid {
+            from { background-position: 0 0; }
+            to { background-position: 40px 40px; }
+        }
+
+        /* New: Logo Spin Animation */
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: spin-slow 15s linear infinite; /* Slow, continuous spin */
+        }
+
+        /* Ensure content stays above the grid */
+        .hero-content > * {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+    <!-- Load Lucide Icons for features -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-tesseract-dark/95 backdrop-blur-sm border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo/Brand Name with Custom SVG Logo (Now Spinning) -->
+                <a href="#" class="flex items-center space-x-2 group">
+                    <!-- Tesseract Geometric Logo SVG -->
+                    <svg class="w-8 h-8 mr-1 text-tesseract-accent transition-transform animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Outer Square/Dimension -->
+                        <rect x="1" y="1" width="22" height="22" rx="3" class="opacity-50"/>
+                        <!-- Inner Cube Projection -->
+                        <path d="M8 8L16 8L16 16L8 16Z" fill="currentColor" class="opacity-90"/>
+                        <path d="M16 8L20 4M8 8L4 4M16 16L20 20M8 16L4 20" class="opacity-90"/>
+                    </svg>
+                    <span class="text-2xl font-extrabold text-tesseract-accent transition-colors group-hover:text-white">Tesseract</span>
+                </a>
+
+                <!-- Desktop Navigation Links (Simplified) -->
+                <nav class="hidden md:flex space-x-8 items-center text-sm font-medium">
+                    <a href="#features" class="text-tesseract-light hover:text-tesseract-accent transition duration-150">Features</a>
+                    <!-- Removed Commands and Support Hub links -->
+                    <a href="https://discord.com/oauth2/authorize?client_id=1406868099969319044&permissions=8&integration_type=0&scope=bot" class="text-tesseract-light hover:text-tesseract-accent transition duration-150">Invite</a>
+                    <button class="px-4 py-2 bg-tesseract-accent text-tesseract-dark font-semibold rounded-xl shadow-lg hover:bg-cyan-300 transition duration-300">
+                        <a href="https://github.com/LokeshShadani/Tesseract-A-Discord-Bot">Status</a>
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 rounded-lg text-tesseract-light hover:bg-gray-800 transition duration-300" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Drawer (Simplified) -->
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-tesseract-dark border-t border-gray-800 pb-4">
+            <div class="flex flex-col space-y-2 px-4 pt-2 text-sm font-medium">
+                <a href="#features" class="block py-2 px-3 rounded-md text-tesseract-light hover:bg-gray-800 transition">Features</a>
+                <!-- Removed Commands and Support Hub links -->
+                <a href="#" class="block py-2 px-3 rounded-md text-tesseract-light hover:bg-gray-800 transition">Invite</a>
+                <button class="w-full mt-2 px-4 py-2 bg-tesseract-accent text-tesseract-dark font-semibold rounded-lg hover:bg-cyan-500 transition duration-300">
+                    Status
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section with Geometric Background and Radial Overlay -->
+        <section class="py-20 md:py-32 text-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 geometric-background rounded-3xl radial-gradient-overlay">
+            <div class="max-w-4xl mx-auto hero-content">
+                <!-- Main Headline with Text Glow -->
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-tight tracking-tighter mb-6 text-glow">
+                    The <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-600">Dimensional Bot</span> for Next-Gen Utilities.
+                </h1>
+                
+                <!-- Subtext -->
+                <p class="text-xl sm:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto">
+                    Tesseract is an advanced, high-performance utility bot integrating **AI-driven analysis**, **complex data processing**, and **cross-platform features** to elevate your server management.
+                </p>
+
+                <!-- Call to Action Buttons -->
+                <div class="flex justify-center space-x-4">
+                    <button class="group px-8 py-3 text-lg font-bold rounded-xl bg-tesseract-accent text-tesseract-dark shadow-2xl shadow-tesseract-accent/50 hover:shadow-tesseract-accent/80 hover:bg-cyan-300 transition duration-300 transform hover:-translate-y-1">
+                        <span class="flex items-center">
+                            <i data-lucide="zap" class="w-5 h-5 mr-2"></i> <a href="https://discord.com/oauth2/authorize?client_id=1406868099969319044&permissions=8&integration_type=0&scope=bot">Invite Tesseract</a>
+                        </span>
+                    </button>
+                    <button class="group px-8 py-3 text-lg font-bold rounded-xl border-2 border-tesseract-accent text-tesseract-accent hover:bg-tesseract-accent/10 transition duration-300 transform hover:-translate-y-1">
+                        <span class="flex items-center">
+                            <i data-lucide="git-branch" class="w-5 h-5 mr-2"></i><a href="https://github.com/LokeshShadani/Tesseract-A-Discord-Bot"> View Documentation</a>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section - Updated Icons and Hover Effects -->
+        <section id="features" class="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-white text-glow">Core Bot Features</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Feature Card 1: Automated Moderation (Icon: Gavel) -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-cyan-400/50 border border-gray-700 hover:border-tesseract-accent">
+                    <i data-lucide="gavel" class="feature-icon w-8 h-8 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Automated Moderation</h3>
+                    <p class="text-gray-400">Advanced filtering, word lists, and action triggers to keep your server clean and compliant $24/7$.</p>
+                </div>
+
+                <!-- Feature Card 2: Customizable Welcoming (Icon: User Plus) -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-cyan-400/50 border border-gray-700 hover:border-tesseract-accent">
+                    <i data-lucide="user-plus" class="feature-icon w-8 h-8 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Customizable Welcoming</h3>
+                    <p class="text-gray-400">Set up personalized welcome messages, auto-role assignments, and verification checks for new users.</p>
+                </div>
+
+                <!-- Feature Card 3: Powerful Utilities (Icon: Wrench) -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-cyan-400/50 border border-gray-700 hover:border-tesseract-accent">
+                    <i data-lucide="wrench" class="feature-icon w-8 h-8 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Powerful Utilities</h3>
+                    <p class="text-gray-400">Essential commands including server info, user lookup, quick polls, and customizable text tools.</p>
+                </div>
+
+                <!-- Feature Card 4: Leveling & XP (Icon: Trophy) -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-cyan-400/50 border border-gray-700 hover:border-tesseract-accent">
+                    <i data-lucide="trophy" class="feature-icon w-8 h-8 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Leveling & XP</h3>
+                    <p class="text-gray-400">Engage your community with a rewarding leveling system, leaderboards, and role rewards based on activity.</p>
+                </div>
+
+                <!-- Feature Card 5: Detailed Logging (Icon: Clipboard) -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-cyan-400/50 border border-gray-700 hover:border-tesseract-accent">
+                    <i data-lucide="clipboard" class="feature-icon w-8 h-8 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Detailed Logging</h3>
+                    <p class="text-gray-400">Track all major server events, including message edits, role changes, and member joins/leaves, in designated channels.</p>
+                </div>
+
+                <!-- Feature Card 6: Fun & Games (Icon: Gamepad) -->
+                <div class="p-6 bg-gray-800 rounded-xl shadow-2xl transition duration-300 hover:scale-[1.03] hover:shadow-cyan-400/50 border border-gray-700 hover:border-tesseract-accent">
+                    <i data-lucide="gamepad" class="feature-icon w-8 h-8 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2 text-white">Fun & Games</h3>
+                    <p class="text-gray-400">Keep members entertained with reaction commands, simple economy systems, and integrated multiplayer games.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Simplified) -->
+    <footer class="mt-20 border-t border-gray-800 bg-tesseract-bg-darker">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
+            
+            <!-- Simplified Grid Structure -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                
+                <!-- Brand/Copyright (Wider column for brand) -->
+                <div class="col-span-2 md:col-span-2">
+                    <a href="#" class="text-2xl font-extrabold text-tesseract-accent">Tesseract</a>
+                    <!-- Updated Copyright Text -->
+                    <p class="text-sm text-gray-500 mt-2">© 2025 Project Tesseract, powered by Lokesh.</p>
+                </div>
+
+                <!-- Essentials (Core Links) -->
+                <div>
+                    <h4 class="text-md font-semibold text-white mb-3">Essentials</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://discord.com/oauth2/authorize?client_id=1406868099969319044&permissions=8&integration_type=0&scope=bot" class="text-gray-400 hover:text-tesseract-accent transition">Invite</a></li>
+                        <li><a href="https://github.com/LokeshShadani/Tesseract-A-Discord-Bot" class="text-gray-400 hover:text-tesseract-accent transition">Documentation</a></li>
+                        <li><a href="https://github.com/LokeshShadani/Tesseract-A-Discord-Bot" class="text-gray-400 hover:text-tesseract-accent transition">GitHub</a></li>
+                    </ul>
+                </div>
+
+                <!-- Information (Support & Status) -->
+                <div>
+                    <h4 class="text-md font-semibold text-white mb-3">Information</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://github.com/LokeshShadani/Tesseract-A-Discord-Bot" class="text-gray-400 hover:text-tesseract-accent transition">Status</a></li>
+                        <li><a href="https://github.com/LokeshShadani/Tesseract-A-Discord-Bot" class="text-gray-400 hover:text-tesseract-accent transition">Support Hub</a></li>
+                        <!-- Added Legal Links here -->
+                        <li><a href="" class="text-gray-400 hover:text-tesseract-accent transition">Terms of Service</a></li>
+                        <li><a href="" class="text-gray-400 hover:text-tesseract-accent transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Menu and Icon Rendering -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggler
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
